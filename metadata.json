@@ -1,0 +1,6 @@
+{
+  "name": "FootyPredict Pro",
+  "description": "AI-powered football match predictor using human-centered statistics and the Poisson model.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}
