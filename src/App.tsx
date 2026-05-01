@@ -45,7 +45,7 @@ const StatBadge = ({ label, value, color = "border-emerald-500" }: { label: stri
   </div>
 );
 
-const VerdictCard = ({ label, pick, prob, type }: { label: string, pick: string, prob: number, type: 'success' | 'warning' | 'info', key?: string | number }) => {
+const VerdictCard = ({ label, pick, prob, type, odds }: { label: string, pick: string, prob: number, type: 'success' | 'warning' | 'info', key?: string | number, odds?: number }) => {
   const colors = {
     success: { bg: "bg-emerald-500/10", border: "border-emerald-500/30", text: "text-emerald-400", badge: "bg-emerald-500 text-black" },
     warning: { bg: "bg-amber-500/10", border: "border-amber-500/30", text: "text-amber-400", badge: "bg-amber-500 text-black" },
@@ -60,7 +60,14 @@ const VerdictCard = ({ label, pick, prob, type }: { label: string, pick: string,
     >
       <div className="flex justify-between items-start z-10">
         <span className="text-[9px] font-black uppercase tracking-[0.2em] text-slate-500">{label}</span>
-        <span className={`${theme.badge} text-[8px] font-black px-1.5 py-0.5 rounded uppercase`}>{prob > 65 ? 'High Confidence' : 'Value Pick'}</span>
+        <div className="flex items-center gap-1.5">
+          <span className={`${theme.badge} text-[8px] font-black px-1.5 py-0.5 rounded uppercase tracking-tighter shadow-sm`}>{prob > 65 ? 'High Confidence' : 'Value Pick'}</span>
+          {odds && (
+            <span className="bg-slate-900/80 text-white text-[10px] font-mono font-bold px-2 py-0.5 rounded border border-white/10 shadow-lg">
+              {odds.toFixed(2)}
+            </span>
+          )}
+        </div>
       </div>
       <div className="flex items-end justify-between z-10">
         <span className={`text-sm font-bold text-white capitalize`}>{pick}</span>
@@ -303,14 +310,20 @@ export default function App() {
                         const o25 = results.overUnder['2.5'].over;
                         const o15 = results.overUnder['1.5'].over;
 
-                        if (hP + dP > 70) verdicts.push(<VerdictCard key="dc" label="Double Chance" pick={`${results.homeTeam} or Draw`} prob={Math.round(hP + dP)} type="success" />);
-                        else if (aP + dP > 70) verdicts.push(<VerdictCard key="dc" label="Double Chance" pick={`${results.awayTeam} or Draw`} prob={Math.round(aP + dP)} type="success" />);
+                        const getOdds = (p: number) => {
+                          if (p <= 0) return 1.01;
+                          const fair = 100 / p;
+                          return Math.max(1.05, Math.round(fair * 0.93 * 100) / 100);
+                        };
 
-                        if (o25 > 60) verdicts.push(<VerdictCard key="o25" label="Goal Market" pick="Over 2.5 Goals" prob={o25} type="warning" />);
-                        else if (o15 > 75) verdicts.push(<VerdictCard key="o15" label="Goal Market" pick="Over 1.5 Goals" prob={o15} type="success" />);
+                        if (hP + dP > 70) verdicts.push(<VerdictCard key="dc" label="1XBET Market: 1X" pick={`${results.homeTeam} or Draw`} prob={Math.round(hP + dP)} odds={getOdds(hP + dP)} type="success" />);
+                        else if (aP + dP > 70) verdicts.push(<VerdictCard key="dc" label="1XBET Market: X2" pick={`${results.awayTeam} or Draw`} prob={Math.round(aP + dP)} odds={getOdds(aP + dP)} type="success" />);
 
-                        if (hP > 55) verdicts.push(<VerdictCard key="win" label="Match Winner" pick={results.homeTeam} prob={hP} type="info" />);
-                        else if (aP > 55) verdicts.push(<VerdictCard key="win" label="Match Winner" pick={results.awayTeam} prob={aP} type="info" />);
+                        if (o25 > 60) verdicts.push(<VerdictCard key="o25" label="1XBET Market: Over 2.5" pick="Over 2.5 Goals" prob={o25} odds={getOdds(o25)} type="warning" />);
+                        else if (o15 > 75) verdicts.push(<VerdictCard key="o15" label="1XBET Market: Over 1.5" pick="Over 1.5 Goals" prob={o15} odds={getOdds(o15)} type="success" />);
+
+                        if (hP > 55) verdicts.push(<VerdictCard key="win" label="1XBET Market: W1" pick={results.homeTeam} prob={hP} odds={getOdds(hP)} type="info" />);
+                        else if (aP > 55) verdicts.push(<VerdictCard key="win" label="1XBET Market: W2" pick={results.awayTeam} prob={aP} odds={getOdds(aP)} type="info" />);
 
                         return verdicts.slice(0, 3);
                       })()}
