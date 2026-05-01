@@ -1,0 +1,20 @@
+export const POPULAR_TEAMS = [
+  "Arsenal", "Aston Villa", "Bournemouth", "Brentford", "Brighton & Hove Albion", 
+  "Chelsea", "Crystal Palace", "Everton", "Fulham", "Ipswich Town", 
+  "Leicester City", "Liverpool", "Manchester City", "Manchester United", "Newcastle United", 
+  "Nottingham Forest", "Southampton", "Tottenham Hotspur", "West Ham United", "Wolverhampton Wanderers",
+  "Real Madrid", "Barcelona", "Atletico Madrid", "Girona", "Athletic Club", 
+  "Real Sociedad", "Real Betis", "Valencia", "Sevilla", "Villarreal",
+  "Bayern Munich", "Bayer Leverkusen", "RB Leipzig", "Borussia Dortmund", "Stuttgart", 
+  "Eintracht Frankfurt", "Hoffenheim", "Wolfsburg", "Werder Bremen", "Freiburg",
+  "Inter Milan", "AC Milan", "Juventus", "Atalanta", "Bologna", 
+  "AS Roma", "Lazio", "Fiorentina", "Napoli", "Torino",
+  "Paris Saint-Germain", "AS Monaco", "Brest", "Lille", "Nice", 
+  "Lyon", "Lens", "Marseille", "Reims", "Rennes",
+  "Benfica", "Sporting CP", "FC Porto", "Braga", 
+  "Ajax", "PSV Eindhoven", "Feyenoord",
+  "Galatasaray", "Fenerbahce", "Besiktas",
+  "Celtic", "Rangers",
+  "Al-Hilal", "Al-Nassr", "Al-Ittihad", "Al-Ahli",
+  "Inter Miami", "LA Galaxy", "Los Angeles FC"
+].sort();

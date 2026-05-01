@@ -30,6 +30,7 @@ import {
 import { fetchMatchStats } from './services/geminiService';
 import { calculatePrediction } from './services/poissonModel';
 import { PredictionResults, TeamStats } from './types';
+import { POPULAR_TEAMS } from './constants';
 
 // Components
 const StatBadge = ({ label, value, color = "border-emerald-500" }: { label: string, value: string | number, color?: string }) => (
@@ -128,10 +129,16 @@ export default function App() {
           </div>
           
           <form onSubmit={handlePredict} className="space-y-4">
+            <datalist id="popular-teams">
+              {POPULAR_TEAMS.map(team => (
+                <option key={team} value={team} />
+              ))}
+            </datalist>
             <div className="space-y-3">
               <div className="relative group">
                 <input
                   type="text"
+                  list="popular-teams"
                   placeholder="Home Team Name"
                   value={homeTeam}
                   onChange={(e) => setHomeTeam(e.target.value)}
@@ -142,6 +149,7 @@ export default function App() {
               <div className="relative group">
                 <input
                   type="text"
+                  list="popular-teams"
                   placeholder="Away Team Name"
                   value={awayTeam}
                   onChange={(e) => setAwayTeam(e.target.value)}
