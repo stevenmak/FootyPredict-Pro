@@ -29,3 +29,10 @@ export interface PredictionResults {
     probability: number;
   }>;
 }
+
+export interface HistoryItem {
+  id: string;
+  results: PredictionResults;
+  teamStats: { home: TeamStats; away: TeamStats };
+  timestamp: number;
+}

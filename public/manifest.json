@@ -1,0 +1,17 @@
+{
+  "name": "FootyPredict Pro",
+  "short_name": "FootyPredict",
+  "description": "AI-powered football match predictor.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0B0F19",
+  "theme_color": "#10b981",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/3322/3322254.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
